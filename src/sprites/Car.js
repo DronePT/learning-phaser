@@ -1,18 +1,23 @@
 import Phaser from 'phaser'
 
-import { GRID } from './../config'
+export default class CarSprite extends Phaser.Sprite {
+  constructor (player, { game, x, y, asset = 'car-green', velocity = 100 }) {
+    const carsAssets = [ 'car-red', 'car-green', 'car-blue', 'car-yellow' ]
+    const rngAsset = game.rnd.between(0, 3)
+    asset = carsAssets[rngAsset]
 
-export default class extends Phaser.Sprite {
-  constructor ({ game, x, y, asset = 'car', velocity = 100 }) {
     super(game, x, y, asset)
-    this.anchor.setTo(1, 1)
+
+    this.player = player
+
+    this.anchor.setTo(1, 0)
     // this.scale.setTo(0.5, 0.5)
 
-    this.game.physics.arcade.enable(this)
+    // this.game.physics.arcade.enable(this)
     // this.game.physics.arcade.gravity.y = 200
 
     // this.mushroom.body.bounce.y = 0.95
-    this.body.collideWorldBounds = false
+    // this.body.collideWorldBounds = false
 
     this._velocity = velocity
   }
@@ -27,20 +32,25 @@ export default class extends Phaser.Sprite {
 
     let facing
 
-    if (x < 0) { // going left
+    if (xTo < 0) { // going left
       facing = 1
+      if (this.x < 0) this.x = this.game.width + this.width
     } else { // going right
       facing = -1
-      if (this.x > this.game.width) {
-        this.x = 0 + this.width
-      }
+      if (this.x > this.game.width) this.x = 0 + this.width
     }
 
     this.scale.setTo(facing, 1)
     // this.body.acceleration.setTo(xTo, yTo)
   }
 
+  handleCarCollision () {
+    this.resetPlayer()
+  }
+
   update () {
     this.move(1, 0)
+    this.game.physics.arcade.collide(this, this.player, this.handleCarCollision, null, this.player)
+    this.game.debug.body(this)
   }
 }
