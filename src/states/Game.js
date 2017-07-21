@@ -1,30 +1,26 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-import Mushroom from '../sprites/Mushroom'
+
+// sprites
+import Mushroom from './../sprites/Mushroom'
+import Car from './../sprites/Car'
 
 export default class extends Phaser.State {
   init () {}
   preload () {}
 
   create () {
-    const map = this.game.add.tilemap('base')
-    map.addTilesetImage('buch-outdoor')
-
-    const base = map.createLayer('base')
-    const roads = map.createLayer('roads')
-    const water  = map.createLayer('water')
-
     // activate physics
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    // const bannerText = 'Phaser + ES6 + Webpack = Frogger'
-    // let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
-    // banner.font = 'Bangers'
-    // banner.padding.set(10, 16)
-    // banner.fontSize = 40
-    // banner.fill = '#77BFA3'
-    // banner.smoothed = false
-    // banner.anchor.setTo(0.5)
+    const map = this.game.add.tilemap('city')
+    map.addTilesetImage('city')
+
+    const base = map.createLayer('base')
+    const roads = map.createLayer('garden')
+    const water  = map.createLayer('road')
+
+    //  add player/mushroom
 
     this.mushroom = new Mushroom({
       game: this.game,
@@ -35,7 +31,32 @@ export default class extends Phaser.State {
 
     this.game.add.existing(this.mushroom)
 
+    // this.car1 = new Car({
+    //   game: this.game,
+    //   x: 0,
+    //   y: this.world.height - 32 * 1,
+    //   velocity: Math.random() * 400 + 100
+    // })
+
+    // this.game.add.existing(this.car1)
+
+    this.addCar(1)
+    this.addCar(2)
+    this.addCar(3)
+    this.addCar(4)
+
     this.setupControls()
+  }
+
+  addCar (lane) {
+    const car = new Car({
+      game: this.game,
+      x: 0,
+      y: this.world.height - 32 * lane,
+      velocity: Math.random() * 400 + 100
+    })
+
+    this.game.add.existing(car)
   }
 
   setupControls () {

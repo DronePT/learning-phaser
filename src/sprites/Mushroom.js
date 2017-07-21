@@ -5,7 +5,7 @@ import { GRID, NEXT_JUMP_TIME } from './../config'
 export default class extends Phaser.Sprite {
   constructor ({ game, x, y, asset }) {
     super(game, x, y, asset)
-    this.anchor.setTo(0.5)
+    this.anchor.setTo(0.5, 1)
     this.scale.setTo(0.5, 0.5)
 
     this.game.physics.arcade.enable(this)
