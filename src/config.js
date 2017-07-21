@@ -1,5 +1,8 @@
+export const GRID = 16
+export const NEXT_JUMP_TIME = 250 // milliseconds
+
 export default {
-  gameWidth: 750,
-  gameHeight: 500,
-  localStorageName: 'phaseres6webpack'
+  gameWidth: 512,
+  gameHeight: 384,
+  localStorageName: 'phaseres6webpack',
 }
