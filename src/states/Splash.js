@@ -15,7 +15,12 @@ export default class extends Phaser.State {
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png')
-    this.load.image('car', 'assets/images/car.png')
+
+    // load cars
+    this.load.image('car-red', 'assets/images/car_red.png')
+    this.load.image('car-green', 'assets/images/car_green.png')
+    this.load.image('car-blue', 'assets/images/car_blue.png')
+    this.load.image('car-yellow', 'assets/images/car_yellow.png')
 
     this.load.tilemap('city', './assets/tilemap/city.json', null, Phaser.Tilemap.TILED_JSON)
     this.load.image('city', './assets/tilemap/city.png')
