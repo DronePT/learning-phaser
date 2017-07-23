@@ -1,11 +1,7 @@
 import Phaser from 'phaser'
 
-export default class CarSprite extends Phaser.Sprite {
-  constructor (player, { game, x, y, asset = 'car-green', velocity = 100 }) {
-    const carsAssets = [ 'car-red', 'car-green', 'car-blue', 'car-yellow' ]
-    const rngAsset = game.rnd.between(0, 3)
-    asset = carsAssets[rngAsset]
-
+export default class BoatSprite extends Phaser.Sprite {
+  constructor (player, { game, x, y, asset = 'boat', velocity = 100 }) {
     super(game, x, y, asset)
 
     this.player = player
@@ -44,7 +40,13 @@ export default class CarSprite extends Phaser.Sprite {
     // this.body.acceleration.setTo(xTo, yTo)
   }
 
+  handleBoatCollision () {
+    // this.resetPlayer()
+  }
+
   update () {
     this.move(1, 0)
+    this.game.physics.arcade.collide(this, this.player, this.handleBoatCollision, null, this.player)
+    this.game.debug.body(this)
   }
 }

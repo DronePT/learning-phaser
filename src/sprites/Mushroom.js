@@ -15,10 +15,12 @@ export default class extends Phaser.Sprite {
     this.body.collideWorldBounds = true
     this.body.immovable = true
 
+    this.resetMovement()
     this.lastMove = 0
     this.deaths = 0
 
-    this.ripText = this.game.add.text(this.game.world.centerX, this.game.height/2, 'RiP')
+    this.ripText = this.game.add.text(this.game.world.centerX, this.game.height /
+      2, 'RiP')
     this.ripText.font = 'Bangers'
     this.ripText.padding.set(10, 16)
     this.ripText.fontSize = 40
@@ -28,6 +30,12 @@ export default class extends Phaser.Sprite {
     this.ripText.visible = false
     this.ripText.fixedToCamera = true
     this.ripTextTimer = 0
+  }
+
+  resetMovement () {
+    this.moveDirection = { x: null, y: null }
+    this.moveTo = { x: null, y: null }
+    this.body.velocity.setTo(0)
   }
 
   resetPlayer () {
@@ -57,13 +65,8 @@ export default class extends Phaser.Sprite {
 
     this.lastMove = this.game.time.now + NEXT_JUMP_TIME
 
-    const xTo = x * GRID
-    const yTo = y * GRID
-
-    this.x += xTo
-    this.y += yTo
-    // this.body.velocity.setTo(xTo, yTo)
-    // this.body.acceleration.setTo(xTo, yTo)
+    this.x += x * GRID
+    this.y += y * GRID
   }
 
   update () {}

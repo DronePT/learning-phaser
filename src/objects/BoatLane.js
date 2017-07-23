@@ -2,49 +2,48 @@
 import Phaser from 'phaser'
 
 // our packages
-import Car from './../sprites/Car'
+import Boat from './../sprites/Boat'
 
-export default class CarLane extends Phaser.Group {
+export default class BoatLane extends Phaser.Group {
   constructor (game, player, {
-    numberOfCars = 1,
+    nrOfBoats = 1,
     lane = 1,
     direction = 1,
     velocity = 0
   }) {
     // new Group(game, parent, name, addToStage, enableBody, physicsBodyType)
-    super(game, null, 'CarLane', false, true, Phaser.Physics.ARCADE)
+    super(game, null, 'BoatLane', false, true, Phaser.Physics.ARCADE)
 
     // this.game = game
     this.player = player
 
-    this.cars = []
+    this.boats = []
     this.lane = lane
-    this.numberOfCars = numberOfCars
+    this.nrOfBoats = nrOfBoats
     this.direction = direction
 
     this.velocity = velocity > 0
       ? velocity
       : (Math.random() * 400 + 100)
 
-    this.spacing = Math.floor(this.game.width / numberOfCars)
+    this.spacing = Math.floor(this.game.width / nrOfBoats)
 
-    for (let i = 0; i < numberOfCars; i++) this.addCar(i)
+    for (let i = 0; i < nrOfBoats; i++) this.addBoat(i)
 
     this.setAll('body.collideWorldBounds', false)
-    this.setAll('body.immovable', true)
   }
 
-  addCar (carIndex) {
+  addBoat (boatIndex) {
     const { lane, direction, spacing, player } = this
 
-    // create car sprite
-    const car = new Car(player, {
+    // create boat sprite
+    const boat = new Boat(player, {
       game: this.game,
-      x: carIndex * spacing,
+      x: boatIndex * spacing,
       y: this.game.world.height - 32 * (lane + 1),
       velocity: this.velocity * direction
     })
 
-    this.add(car)
+    this.add(boat)
   }
 }
